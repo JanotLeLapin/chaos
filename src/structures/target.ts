@@ -1,6 +1,13 @@
 import WebSocket from 'ws';
 import { Socket } from './socket';
 
+export interface ITarget {
+  name: string;
+  os: string;
+  ip: string;
+  id: string;
+}
+
 export class Target extends Socket {
   name: string;
   os: string;
@@ -13,5 +20,14 @@ export class Target extends Socket {
     this.name = data.name;
     this.os = data.os;
     this.ip = data.ip;
+  }
+
+  toJSON(): ITarget {
+    return {
+      name: this.name,
+      os: this.os,
+      ip: this.ip,
+      id: this.id,
+    };
   }
 }

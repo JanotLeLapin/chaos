@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import path from 'path';
+import fs from 'fs';
 
 import { Server } from 'ws';
 import { Socket, Command } from './structures/socket';
@@ -16,6 +17,12 @@ const app = express()
     })
   );
 
+fs.readdirSync(path.join(__dirname, 'api', 'routes')).forEach((file) => {
+  const name = file.split('.')[0];
+  const router = require(`./api/routes/${name}`).router;
+  app.use(`/api/${name}`, router);
+});
+
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () =>
   console.log(`Server running on port ${port}.`)
@@ -23,8 +30,8 @@ const server = app.listen(port, () =>
 
 const wss = new Server({ server });
 
-const targets: Target[] = [];
-const clients: Socket[] = [];
+export const targets: Target[] = [];
+export const clients: Socket[] = [];
 
 wss.on('connection', (ws) =>
   ws.on('message', (msg) => {
