@@ -1,4 +1,4 @@
-use std::io::stdin;
+use std::env;
 use std::sync::mpsc::channel;
 use std::thread;
 
@@ -7,6 +7,8 @@ use serde_json::json;
 
 use websocket::client::ClientBuilder;
 use websocket::{Message, OwnedMessage};
+
+use reqwest;
 
 const CONNECTION: &'static str = "ws://localhost:5000";
 
@@ -18,7 +20,7 @@ struct Command {
     to: String,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
 	println!("Connecting to {}", CONNECTION);
 
 	let client = ClientBuilder::new(CONNECTION)
@@ -103,25 +105,39 @@ fn main() {
 		}
 	});
 
+    // Get hostname
+    let name = match hostname::get() {
+        Ok(hn) => match hn.into_string() {
+            Ok(n) => n,
+            Err (_) => "Unknown".to_string(),
+        }
+        Err(_) => "Unknown".to_string(),
+    };
+
+    // Get IP
+    let ip = match reqwest::blocking::get("http://checkip.amazonaws.com")?.text() {
+        Ok(value) => value,
+        Err(_) => "Unknown".to_string(),
+    };
+
     // Send greet payload
     let payload = json!({
         "name": "greet",
         "args": [
-            "Janot",
-            "82874",
-            "Manjaro"
+            name,
+            ip,
+            env::consts::OS
         ],
         "from": "-1",
         "to": "-1"
     });
     tx.send(OwnedMessage::Text(payload.to_string())).expect("Could not send greet.");
 
-	// We're exiting
-	println!("Waiting for child threads to exit");
-
 	let _ = send_loop.join();
 	let _ = receive_loop.join();
 
 	println!("Exited");
+
+    Ok(())
 }
 
