@@ -103,6 +103,18 @@ fn main() {
 		}
 	});
 
+    // Send greet payload
+    let payload = json!({
+        "name": "greet",
+        "args": [
+            "Janot",
+            "82874",
+            "Manjaro"
+        ],
+        "from": "-1",
+        "to": "-1"
+    });
+    tx.send(OwnedMessage::Text(payload.to_string())).expect("Could not send greet.");
 
 	// We're exiting
 	println!("Waiting for child threads to exit");
