@@ -2,12 +2,23 @@ use std::io::stdin;
 use std::sync::mpsc::channel;
 use std::thread;
 
+use serde::{Serialize, Deserialize};
+use serde_json::json;
+
 use websocket::client::ClientBuilder;
 use websocket::{Message, OwnedMessage};
 
 use webbrowser;
 
 const CONNECTION: &'static str = "ws://localhost:5000";
+
+#[derive(Serialize, Deserialize)]
+struct Command {
+    name: String,
+    args: Vec<String>,
+    from: String,
+    to: String,
+}
 
 fn main() {
 	println!("Connecting to {}", CONNECTION);
@@ -83,10 +94,10 @@ fn main() {
 						}
 					}
 				}
-                OwnedMessage::Text(string) => {
-                    if webbrowser::open(&string).is_ok() {
-                        println!("Opened url");
-                    }
+                OwnedMessage::Text(string) =>  {
+                    let command: Command = serde_json::from_str(&string).expect("Could not parse command.");
+                    
+                    println!("Received command {} from {}", command.name, command.from);
                 }
 				// Say what we received
 				_ => println!("Receive message: {:?}", message),
