@@ -8,8 +8,6 @@ use serde_json::json;
 use websocket::client::ClientBuilder;
 use websocket::{Message, OwnedMessage};
 
-use webbrowser;
-
 const CONNECTION: &'static str = "ws://localhost:5000";
 
 #[derive(Serialize, Deserialize)]
@@ -105,36 +103,8 @@ fn main() {
 		}
 	});
 
-	loop {
-		let mut input = String::new();
-
-		stdin().read_line(&mut input).unwrap();
-
-		let trimmed = input.trim();
-
-		let message = match trimmed {
-			"/close" => {
-				// Close the connection
-				let _ = tx.send(OwnedMessage::Close(None));
-				break;
-			}
-			// Send a ping
-			"/ping" => OwnedMessage::Ping(b"PING".to_vec()),
-			// Otherwise, just send text
-			_ => OwnedMessage::Text(trimmed.to_string()),
-		};
-
-		match tx.send(message) {
-			Ok(()) => (),
-			Err(e) => {
-				println!("Main Loop: {:?}", e);
-				break;
-			}
-		}
-	}
 
 	// We're exiting
-
 	println!("Waiting for child threads to exit");
 
 	let _ = send_loop.join();
