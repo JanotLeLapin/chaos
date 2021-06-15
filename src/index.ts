@@ -48,6 +48,8 @@ wss.on('connection', (ws) =>
 
       clients.push(client);
 
+      ws.on('close', () => clients.splice(clients.indexOf(client), 1));
+
       console.log(`New client: ${client.id}`);
     } else if (command.args.length === 3) {
       const target = new Target(ws, {
@@ -57,6 +59,8 @@ wss.on('connection', (ws) =>
       });
 
       targets.push(target);
+
+      ws.on('close', () => targets.splice(targets.indexOf(target), 1));
 
       console.log(`New target: ${target.id}`);
     } else return ws.close();
