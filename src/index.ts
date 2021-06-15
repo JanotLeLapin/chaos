@@ -1,11 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 
+import path from 'path';
+
 import { Server } from 'ws';
 import { Socket, Command } from './structures/socket';
-import {Target} from './structures/target';
+import { Target } from './structures/target';
 
-const app = express().use(cors()).use(express.json());
+const app = express()
+  .use(cors())
+  .use(express.json())
+  .use(
+    express.static(path.join('.', 'client', 'public'), {
+      extensions: ['html'],
+    })
+  );
 
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () =>
