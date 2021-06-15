@@ -1,24 +1,37 @@
 <script lang="ts">
+  import { Link } from 'svelte-navigator';
+
   export let name: string;
   export let ip: string;
   export let id: string;
 
-  export const redirect = () => {
-    window.location.href = '/' + id;
-  };
-
 </script>
 
-<main on:click={redirect}>
-  <h3 class="name">{name}</h3>
-  <h4 class="ip">{ip}</h4>
+<main>
+  <Link to={'targets/' + id}>
+    <h2 class="name">{name}</h2>
+    <h3 class="ip">{ip}</h3>
+  </Link>
 </main>
 
 <style>
   main {
+    background-color: var(--dark-2);
+    border-radius: 0.5rem;
+
     text-align: center;
-    padding: 1rem;
+
     max-width: 240px;
+
+    padding: 1rem;
+  }
+
+  .name {
+    color: var(--light-2);
+  }
+
+  .ip {
+    color: var(--light-0);
   }
 
 </style>

@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+const baseUrl = 'http://localhost:5000/api/';
+
 export interface Command {
   name: string;
   args: string[];
@@ -10,4 +14,17 @@ export interface Socket {
   os: string;
   ip: string;
   id: string;
+}
+
+export class Api {
+  static targets(): Promise<Socket[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await axios.get(baseUrl + 'targets');
+        resolve(data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 }
