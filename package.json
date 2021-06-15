@@ -44,6 +44,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "rollup": "^2.51.2",
     "ws": "^7.4.6"
   },
   "devDependencies": {
