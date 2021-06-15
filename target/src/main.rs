@@ -125,8 +125,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "name": "greet",
         "args": [
             name,
-            ip,
-            env::consts::OS
+            env::consts::OS,
+            ip
         ],
         "from": "-1",
         "to": "-1"
