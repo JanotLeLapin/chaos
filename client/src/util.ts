@@ -19,6 +19,6 @@ export const secondsToString = (seconds: number) => {
     ' hour' +
     (h === 1 ? '' : 's') +
     (m === 0 ? '' : ', ' + m + ' minute' + (m === 1 ? '' : 's')) +
-    (s === 0 ? '' : ', ' + s + ' seconds' + (s === 1 ? '' : 's'))
+    (s === 0 ? '' : ', ' + s + ' second' + (s === 1 ? '' : 's'))
   );
 };
