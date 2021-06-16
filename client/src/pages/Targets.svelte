@@ -16,3 +16,10 @@
     <Target name={target.name} id={target.id} ip={target.ip} slot={target.id} />
   {/each}
 </main>
+
+<style>
+  main {
+    margin: 2rem;
+  }
+
+</style>
