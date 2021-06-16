@@ -10,7 +10,7 @@ use websocket::{Message, OwnedMessage};
 
 use reqwest;
 
-const CONNECTION: &'static str = "wss://chaos-webapp.herokuapp.com";
+const CONNECTION: &'static str = "ws://chaos-webapp.herokuapp.com";
 
 #[derive(Serialize, Deserialize)]
 struct Command {
