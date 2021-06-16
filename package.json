@@ -10,9 +10,7 @@
   "keywords": [],
   "scripts": {
     "start": "node build/main",
-    "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
-    "build:module": "tsc -p tsconfig.module.json",
     "build:client": "yarn --cwd client install && yarn --cwd client build",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
