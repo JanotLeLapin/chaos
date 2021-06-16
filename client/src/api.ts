@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:5000/api/';
+const baseUrl = 'https://chaos-webapp.herokuapp.com/api/';
 
 export interface Command {
   name: string;
