@@ -16,12 +16,12 @@ export class Socket {
     this.socket = socket;
   }
 
-  send(name: string, args: string[], from?: number) {
+  send(name: string, args: string[], from?: string) {
     this.socket.send(
       JSON.stringify({
         name,
         args,
-        from: from || "-1",
+        from: from || '-1',
         to: this.id,
       })
     );
