@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Link, Route, Router } from 'svelte-navigator';
+  import Dashboard from './pages/Dashboard.svelte';
   import Targets from './pages/Targets.svelte';
 
 </script>
@@ -11,6 +12,7 @@
   <main>
     <h1>Svelte rules</h1>
     <Route path="targets" component={Targets} />
+    <Route path="targets/:id" component={Dashboard} />
   </main>
 </Router>
 
