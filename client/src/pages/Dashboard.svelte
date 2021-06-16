@@ -29,7 +29,22 @@
 
 <main>
   {#if socket}
-    <h1>Currently viewing {socket.name}. Have fun</h1>
+    <h1>
+      Currently viewing <span class="name">{socket.name}</span>. Have fun.
+    </h1>
     <h3>Up for {secondsToString(time)}</h3>
   {/if}
 </main>
+
+<style>
+  main {
+    color: var(--light-0);
+  }
+
+  .name {
+    color: var(--light-2);
+
+    text-decoration: underline;
+  }
+
+</style>

@@ -12,14 +12,36 @@
 </script>
 
 <main>
-  {#each targets as target}
-    <Target name={target.name} id={target.id} ip={target.ip} slot={target.id} />
-  {/each}
+  {#if targets.length > 0}
+    <p>
+      The <span class="target-count"
+        >{targets.length === 1 ? 'only' : targets.length}</span
+      >
+      poor computer{targets.length === 1 ? '' : 's'} infected by Chaos. Too bad for
+      {targets.length === 1 ? 'him' : 'them'}.
+    </p>
+  {/if}
+  <div class="targets">
+    {#each targets as target}
+      <Target
+        name={target.name}
+        id={target.id}
+        ip={target.ip}
+        slot={target.id}
+      />
+    {/each}
+  </div>
 </main>
 
 <style>
-  main {
-    margin: 2rem;
+  .targets {
+    margin: 4rem 2rem;
+  }
+
+  .target-count {
+    color: var(--main-1);
+
+    font-weight: bold;
   }
 
 </style>

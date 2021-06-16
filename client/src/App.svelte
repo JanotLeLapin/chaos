@@ -1,21 +1,18 @@
 <script lang="ts">
   import { Link, Route, Router } from 'svelte-navigator';
-  import type { Command } from './api';
   import Dashboard from './pages/Dashboard.svelte';
+  import Home from './pages/Home.svelte';
   import Targets from './pages/Targets.svelte';
 
-  import { openConnection, subscribe } from './websocket';
+  import { openConnection } from './websocket';
 
   openConnection();
 
 </script>
 
 <Router>
-  <nav>
-    <Link to="targets">Targets</Link>
-  </nav>
   <main>
-    <h1>Svelte rules</h1>
+    <Route path="/" component={Home} />
     <Route path="targets" component={Targets} />
     <Route path="targets/:id" component={Dashboard} />
   </main>
@@ -26,8 +23,8 @@
     --dark-0: #1a1a1a;
     --dark-1: #262626;
     --dark-2: #333333;
-    --light-0: #cccccc;
-    --light-1: #d9d9d9;
+    --light-0: #b3b3b3;
+    --light-1: #cccccc;
     --light-2: #e6e6e6;
     --main-0: #f20d0d;
     --main-1: #f42525;
@@ -37,6 +34,8 @@
   :global(body) {
     color: var(--light-1);
     background-color: var(--dark-1);
+
+    padding: 0;
   }
 
   :global(button) {
@@ -59,7 +58,7 @@
     max-width: 240px;
 
     margin: 0 auto;
-    padding: 1em;
+    padding: 0;
   }
 
   @media (min-width: 640px) {
