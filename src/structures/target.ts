@@ -29,7 +29,7 @@ export class Target extends Socket {
     return {
       name: this.name,
       os: this.os,
-      ip: this.ip,
+      ip: this.ip.replace('\n', ''),
       id: this.id,
       up: this.up.getTime(),
     };
