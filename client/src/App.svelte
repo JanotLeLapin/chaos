@@ -1,7 +1,12 @@
 <script lang="ts">
   import { Link, Route, Router } from 'svelte-navigator';
+  import type { Command } from './api';
   import Dashboard from './pages/Dashboard.svelte';
   import Targets from './pages/Targets.svelte';
+
+  import { openConnection, subscribe } from './websocket';
+
+  openConnection();
 
 </script>
 
