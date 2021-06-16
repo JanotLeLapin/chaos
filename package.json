@@ -12,6 +12,7 @@
     "start": "node build/main",
     "build:main": "tsc -p tsconfig.json",
     "build:client": "yarn --cwd client install && yarn --cwd client build",
+    "pages": "gh-pages -m \"[ci skip] Updates\" -d client/public",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "test": "run-s build test:*",
@@ -34,8 +35,7 @@
     "version": "standard-version",
     "reset-hard": "git clean -dfx && git reset --hard && yarn",
     "prepare-release": "run-s reset-hard test cov:check doc:html version doc:publish",
-    "postinstall": "run-p build:main",
-    "heroku-postbuild": "run-p build:client"
+    "postinstall": "run-p build:main"
   },
   "engines": {
     "node": ">=10"
