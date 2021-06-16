@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 
 export interface Command {
   name: string;
-  args: string[];
+  data: any;
   from: string;
   to: string;
 }
@@ -16,11 +16,11 @@ export class Socket {
     this.socket = socket;
   }
 
-  send(name: string, args: string[], from?: string) {
+  send(name: string, data: any, from?: string) {
     this.socket.send(
       JSON.stringify({
         name,
-        args,
+        data,
         from: from || '-1',
         to: this.id,
       })

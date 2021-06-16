@@ -4,6 +4,7 @@ use std::thread;
 
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use serde_json::Value;
 
 use websocket::client::ClientBuilder;
 use websocket::{Message, OwnedMessage};
@@ -15,7 +16,7 @@ const CONNECTION: &'static str = "ws://chaos-webapp.herokuapp.com";
 #[derive(Serialize, Deserialize)]
 struct Command {
   name: String,
-  args: Vec<String>,
+  data: Value,
   from: String,
   to: String,
 }
@@ -123,11 +124,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
   // Send greet payload
   let payload = json!({
       "name": "greet",
-      "args": [
-          name,
-          env::consts::OS,
-          ip
-      ],
+      "data": {
+        "t": "other",
+        "name": name,
+        "ip": ip,
+        "os": env::consts::OS
+      },
       "from": "-1",
       "to": "-1"
   });

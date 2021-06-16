@@ -4,7 +4,7 @@ const baseUrl = 'https://chaos-webapp.herokuapp.com/api/';
 
 export interface Command {
   name: string;
-  args: string[];
+  data: any;
   from: string;
   to: string;
 }

@@ -3,7 +3,7 @@ import type { Command } from './api';
 
 const messageStore = writable<Command>({
   name: 'open',
-  args: [],
+  data: {},
   from: '-1',
   to: '-1',
 });
@@ -17,7 +17,9 @@ export const openConnection = () => {
   socket.addEventListener('open', () =>
     sendCommand({
       name: 'greet',
-      args: [],
+      data: {
+        t: 'client',
+      },
       from: '-1',
       to: '-1',
     })

