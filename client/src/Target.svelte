@@ -8,10 +8,9 @@
 </script>
 
 <main>
-  <Link to={'targets/' + id}>
-    <h2 class="name">{name}</h2>
-    <h3 class="ip">{ip}</h3>
-  </Link>
+  <h2 class="name">{name}</h2>
+  <h3 class="ip">{ip}</h3>
+  <Link to={'/targets/' + id}><button>Select</button></Link>
 </main>
 
 <style>
@@ -32,6 +31,10 @@
 
   .ip {
     color: var(--light-0);
+  }
+
+  button {
+    padding: 0.5rem 2rem;
   }
 
 </style>
