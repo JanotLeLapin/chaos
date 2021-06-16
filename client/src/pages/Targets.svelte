@@ -17,7 +17,8 @@
       The <span class="target-count"
         >{targets.length === 1 ? 'only' : targets.length}</span
       >
-      poor computer{targets.length === 1 ? '' : 's'} infected by Chaos. Too bad for
+      poor computer{targets.length === 1 ? '' : 's'} infected by Chaos 🔥. Too bad
+      for
       {targets.length === 1 ? 'him' : 'them'}.
     </p>
   {/if}
