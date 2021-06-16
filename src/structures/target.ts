@@ -6,12 +6,14 @@ export interface ITarget {
   os: string;
   ip: string;
   id: string;
+  up: number;
 }
 
 export class Target extends Socket {
   name: string;
   os: string;
   ip: string;
+  up: Date;
 
   constructor(socket: WebSocket, data?: any) {
     super(socket);
@@ -20,6 +22,7 @@ export class Target extends Socket {
     this.name = data.name;
     this.os = data.os;
     this.ip = data.ip;
+    this.up = new Date(Date.now());
   }
 
   toJSON(): ITarget {
@@ -28,6 +31,7 @@ export class Target extends Socket {
       os: this.os,
       ip: this.ip,
       id: this.id,
+      up: this.up.getTime(),
     };
   }
 }

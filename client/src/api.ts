@@ -14,6 +14,7 @@ export interface Socket {
   os: string;
   ip: string;
   id: string;
+  up: Date;
 }
 
 export class Api {
