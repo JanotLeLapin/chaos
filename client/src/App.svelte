@@ -22,11 +22,29 @@
     --light-0: #cccccc;
     --light-1: #d9d9d9;
     --light-2: #e6e6e6;
+    --main-0: #f20d0d;
+    --main-1: #f42525;
+    --main-2: #f53d3d;
   }
 
   :global(body) {
     color: var(--light-1);
     background-color: var(--dark-1);
+  }
+
+  :global(button) {
+    cursor: pointer;
+
+    color: var(--light-0);
+    background-color: var(--main-1);
+
+    border: none;
+    border-radius: 0.2rem;
+
+    transition: 0.15s ease-in-out;
+  }
+  :global(button:hover) {
+    background-color: var(--main-2);
   }
 
   main {
