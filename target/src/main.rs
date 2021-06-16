@@ -98,7 +98,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         OwnedMessage::Text(string) => {
           let command: Command = serde_json::from_str(&string).expect("Could not parse command.");
 
-          println!("Received command {} from {}", command.name, command.from);
+          let out: &str = match command.name {
+            _ => "Unknown command.",
+          };
+
+          let output = json!({
+            "name": command.name,
+            "data": {
+              "out": out
+            },
+            "from": command.from,
+            "to": command.to
+          });
+
+          match tx_1.send(OwnedMessage::Text(output.to_string())) {
+            Ok(_) => println!("Responded to {}", command.name),
+            Err(_) => println!("Could not respond to {}", command.name),
+          }
         }
         // Say what we received
         _ => println!("Receive message: {:?}", message),
