@@ -10,18 +10,19 @@ import { Target } from './structures/target';
 
 const app = express()
   .use(cors())
-  .use(express.json())
-  .use(
-    express.static(path.join('.', 'client', 'public'), {
-      extensions: ['html'],
-    })
-  );
+  .use(express.json());
 
 fs.readdirSync(path.join(__dirname, 'api', 'routes')).forEach((file) => {
   const name = file.split('.')[0];
   const router = require(`./api/routes/${name}`).router;
   app.use(`/api/${name}`, router);
 });
+
+app.use('/', express.static(path.join('client', 'public'), {
+  extensions: ['html'],
+  redirect: false,
+}));
+app.get('*', (_req, res) => res.sendFile(path.resolve('client/public/index.html')));
 
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () =>
