@@ -15,4 +15,11 @@ router.get('/', (_req, res) => {
   );
 });
 
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+
+  const target = targets.find((t) => t.id === id);
+  if (!target) return res.status(404).json({ message: 'Target not found.' });
+
+  return res.status(200).json(target.toJSON());
 });

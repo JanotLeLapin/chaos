@@ -28,4 +28,18 @@ export class Api {
       }
     });
   }
+
+  static target(id: string): Promise<Socket> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await axios.get(baseUrl + 'targets/' + id);
+        resolve({
+          ...data,
+          up: new Date(data.up),
+        });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 }
