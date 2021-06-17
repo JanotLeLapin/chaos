@@ -41,7 +41,6 @@ export const broadcast = (command: Command) =>
   clients.forEach((client) => client.send(command.name, command.data, '-1'));
 
 wss.on('connection', (ws) => {
-  console.log('NEW CONNECTION');
   ws.on('message', (msg) => {
     let command: Command;
     try {
@@ -87,4 +86,4 @@ wss.on('connection', (ws) => {
       console.log(`New target: ${target.id}`);
     } else return ws.close();
   })
-);
+});
