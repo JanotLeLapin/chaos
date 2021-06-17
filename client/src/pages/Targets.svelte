@@ -2,12 +2,17 @@
   import { Api } from '../api';
   import type { Socket } from '../api';
   import Target from '../Target.svelte';
+  import { onMount } from 'svelte';
 
   let targets: Socket[] = [];
 
-  Api.targets()
-    .then((data) => (targets = data))
-    .catch((err) => console.error(err));
+  onMount(async () => {
+    try {
+      targets = await Api.targets();
+    } catch (err) {
+      console.error(err);
+    }
+  });
 
 </script>
 
