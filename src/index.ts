@@ -6,7 +6,7 @@ import fs from 'fs';
 
 import { Server } from 'ws';
 import { Socket, Command } from './structures/socket';
-import { Target } from './structures/target';
+import { ITarget, Target } from './structures/target';
 
 const app = express().use(cors()).use(express.json());
 
@@ -37,7 +37,11 @@ const wss = new Server({ server });
 export const targets: Target[] = [];
 export const clients: Socket[] = [];
 
-wss.on('connection', (ws) =>
+export const broadcast = (command: Command) =>
+  clients.forEach((client) => client.send(command.name, command.data, '-1'));
+
+wss.on('connection', (ws) => {
+  console.log('NEW CONNECTION');
   ws.on('message', (msg) => {
     let command: Command;
     try {
@@ -62,9 +66,23 @@ wss.on('connection', (ws) =>
         ip: command.data?.ip,
       });
 
+      broadcast({
+        name: 'targetAdd',
+        data: { ...target.toJSON(), os: undefined, up: undefined } as ITarget,
+        from: '-1',
+        to: '-1',
+      });
       targets.push(target);
 
-      ws.on('close', () => targets.splice(targets.indexOf(target), 1));
+      ws.on('close', () => {
+        broadcast({
+          name: 'targetQuit',
+          data: { id: target.id },
+          from: '-1',
+          to: '-1',
+        });
+        targets.splice(targets.indexOf(target), 1);
+      });
 
       console.log(`New target: ${target.id}`);
     } else return ws.close();

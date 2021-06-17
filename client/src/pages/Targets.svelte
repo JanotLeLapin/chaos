@@ -3,12 +3,26 @@
   import type { Socket } from '../api';
   import Target from '../Target.svelte';
   import { onMount } from 'svelte';
+  import { subscribe } from '../websocket';
 
   let targets: Socket[] = [];
 
   onMount(async () => {
     try {
-      targets = await Api.targets();
+      targets = [...targets, ...(await Api.targets())];
+
+      subscribe((command) => {
+        switch (command.name) {
+          case 'targetAdd':
+            targets = [...targets, command.data];
+            break;
+          case 'targetQuit':
+            targets = targets.filter(
+              (target) => target.id !== command.data?.id
+            );
+            break;
+        }
+      });
     } catch (err) {
       console.error(err);
     }
