@@ -47,10 +47,29 @@
     border: none;
     border-radius: 0.2rem;
 
+    outline: none;
+
     transition: 0.15s ease-in-out;
   }
   :global(button:hover) {
+    color: var(--light-2);
     background-color: var(--main-2);
+  }
+
+  :global(input[type='text']) {
+    color: var(--light-0);
+    background-color: var(--dark-0);
+
+    border: 2px solid var(--dark-1);
+    border-radius: 0.2rem;
+
+    outline: none;
+
+    transition: 0.15s ease-in-out;
+  }
+  :global(input[type='text']:focus) {
+    color: var(--light-2);
+    border: 2px solid var(--main-1);
   }
 
   main {
