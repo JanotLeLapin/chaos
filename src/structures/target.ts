@@ -21,7 +21,7 @@ export class Target extends Socket {
     if (!data) return;
     this.name = data.name;
     this.os = data.os;
-    this.ip = data.ip;
+    this.ip = data.ip?.replace('\n', '');
     this.up = new Date(Date.now());
   }
 
@@ -29,7 +29,7 @@ export class Target extends Socket {
     return {
       name: this.name,
       os: this.os,
-      ip: this.ip.replace('\n', ''),
+      ip: this.ip,
       id: this.id,
       up: this.up.getTime(),
     };
