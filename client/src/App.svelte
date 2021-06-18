@@ -14,7 +14,7 @@
   <main>
     <Route path="/" component={Home} />
     <Route path="targets" component={Targets} />
-    <Route path="targets/:id" component={Dashboard} />
+    <Route path="targets/:id/*" component={Dashboard} />
   </main>
 </Router>
 

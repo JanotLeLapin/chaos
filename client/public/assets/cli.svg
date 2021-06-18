@@ -1,0 +1,12 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cli">
+<path id="window" d="M0 69H256V209C256 214.523 251.523 219 246 219H10C4.47715 219 0 214.523 0 209V69Z" fill="#515151"/>
+<path id="text" d="M28.4215 103.434L31.8677 97.8462L51.1169 109.76V115.323L31.9415 127.237L28.4215 121.945L44.4215 112.542L28.4215 103.434Z" fill="white"/>
+<g id="title">
+<path id="bar" d="M0 46C0 40.4772 4.47715 36 10 36H246C251.523 36 256 40.4772 256 46V69H0V46Z" fill="#888888"/>
+<circle id="btn_1" cx="18" cy="53" r="11" fill="#5C5C5C"/>
+<circle id="btn_1_2" cx="64" cy="53" r="11" fill="#5C5C5C"/>
+<circle id="btn_1_3" cx="112" cy="53" r="11" fill="#5C5C5C"/>
+</g>
+</g>
+</svg>
