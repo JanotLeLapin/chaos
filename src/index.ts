@@ -87,6 +87,21 @@ wss.on('connection', (ws) => {
       });
       targets.push(target);
 
+      ws.on('message', (rawData) => {
+        let data: Command;
+
+        try {
+          data = JSON.parse(rawData.toString());
+        } catch (err) {
+          return;
+        }
+        if (data.name !== 'cmd') return;
+
+        const client = clients.find((c) => c.id === data.from);
+        if (!client) return;
+
+        client.send(data.name, data.data, target.id);
+      });
       ws.on('close', () => {
         broadcast({
           name: 'targetQuit',

@@ -64,4 +64,10 @@
     text-decoration: underline;
   }
 
+  :global(.hint) {
+    color: var(--light-0);
+
+    font-style: italic;
+  }
+
 </style>

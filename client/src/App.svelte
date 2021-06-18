@@ -56,7 +56,8 @@
     background-color: var(--main-2);
   }
 
-  :global(input[type='text']) {
+  :global(input[type='text']),
+  :global(textarea) {
     color: var(--light-0);
     background-color: var(--dark-0);
 
@@ -67,7 +68,8 @@
 
     transition: 0.15s ease-in-out;
   }
-  :global(input[type='text']:focus) {
+  :global(input[type='text']:focus),
+  :global(textarea:focus) {
     color: var(--light-2);
     border: 2px solid var(--main-1);
   }

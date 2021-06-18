@@ -1,8 +1,11 @@
 <script lang="ts">
-  import { sendCommand } from '../../websocket';
+  import { onMount } from 'svelte';
+
+  import { sendCommand, subscribe } from '../../websocket';
 
   export let id: string;
 
+  let output: string = '';
   let input: HTMLInputElement;
 
   const keydown = (key: KeyboardEvent) => {
@@ -16,9 +19,25 @@
     input.value = '';
   };
 
+  onMount(() => {
+    subscribe((command) => {
+      if (command.name !== 'cmd' || command.from !== id) return;
+      const out = command.data?.out || '';
+      output += out ? out + '\n' : '';
+    });
+  });
+
 </script>
 
 <main>
+  <textarea
+    bind:value={output}
+    readonly={true}
+    name="output"
+    id="out"
+    cols="30"
+    rows="10"
+  />
   <input
     bind:this={input}
     on:keydown={keydown}
@@ -29,9 +48,18 @@
 </main>
 
 <style>
+  textarea,
   input {
     font-family: 'Fira Code', 'Menlo', 'Consolas';
+  }
 
+  textarea {
+    resize: none;
+
+    width: calc(100% - 4rem);
+  }
+
+  input {
     width: calc(100% - 8rem);
   }
 
