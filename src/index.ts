@@ -55,6 +55,20 @@ wss.on('connection', (ws) => {
 
       clients.push(client);
 
+      ws.on('message', (rawData) => {
+        let data: Command;
+        try {
+          data = JSON.parse(rawData.toString());
+        } catch (err) {
+          return;
+        }
+        if (data.name !== 'cmd') return;
+
+        const target = targets.find((t) => t.id === data.to);
+        if (!target) return;
+
+        target.send(data.name, data.data, client.id);
+      });
       ws.on('close', () => clients.splice(clients.indexOf(client), 1));
 
       console.log(`New client: ${client.id}`);
@@ -85,5 +99,5 @@ wss.on('connection', (ws) => {
 
       console.log(`New target: ${target.id}`);
     } else return ws.close();
-  })
+  });
 });

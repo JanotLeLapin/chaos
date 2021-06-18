@@ -4,7 +4,7 @@ const baseUrl = isProduction
   ? 'https://chaos-webapp.herokuapp.com/api/'
   : 'http://localhost:5000/api/';
 
-export type CommandName = 'open' | 'greet' | 'targetAdd' | 'targetQuit';
+export type CommandName = 'open' | 'greet' | 'targetAdd' | 'targetQuit' | 'cmd';
 
 export interface Command {
   name: CommandName;
