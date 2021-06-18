@@ -10,13 +10,17 @@
 
   const keydown = (key: KeyboardEvent) => {
     if (key.code !== 'Enter') return;
+    const inp = input.value;
+    if (!inp) return;
+    input.value = '';
+    if (inp === 'clear') return (output = '');
+    output += '> ' + inp + '\n';
     sendCommand({
       name: 'cmd',
-      data: { input: input.value },
+      data: { input: inp },
       from: '-1',
       to: id,
     });
-    input.value = '';
   };
 
   onMount(() => {
