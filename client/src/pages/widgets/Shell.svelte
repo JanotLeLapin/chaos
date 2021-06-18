@@ -34,6 +34,13 @@
 </script>
 
 <main>
+  <h3 class="description">
+    The shell gives you a lot of control over the target, as long as you know
+    what you're doing.
+  </h3>
+  <p class="hint">
+    You can also clear the output log with the command <code>clear</code>.
+  </p>
   <textarea
     bind:value={output}
     readonly={true}
