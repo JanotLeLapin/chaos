@@ -1,11 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import type { Socket } from '../../api';
 
   import { sendCommand, subscribe } from '../../websocket';
 
-  export let id: string;
+  export let socket: Socket;
 
-  let output: string = '';
+  let output: string =
+    (socket.os === 'windows'
+      ? 'This device is running on a Windows OS. Make sure to use batch commands.'
+      : 'This device is running on an Unix-like OS. Make sure to use bash commands.') +
+    '\n';
   let input: HTMLInputElement;
 
   const keydown = (key: KeyboardEvent) => {
@@ -19,13 +24,13 @@
       name: 'cmd',
       data: { input: inp },
       from: '-1',
-      to: id,
+      to: socket.id,
     });
   };
 
   onMount(() => {
     subscribe((command) => {
-      if (command.name !== 'cmd' || command.from !== id) return;
+      if (command.name !== 'cmd' || command.from !== socket.id) return;
       const out = command.data?.out || '';
       output += out ? out + '\n' : '';
     });

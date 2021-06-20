@@ -41,7 +41,7 @@
         <div class="widgets">
           <Widget
             title="Shell"
-            description="Write shell commands that will run on the target's pc. Unavailable on Unix-based OS (who the hell uses Linux anyway)."
+            description="Write shell commands that will run on the target's pc. Works on Unix-based OS as well now!"
             icon="/assets/cli.svg"
           />
           <Widget
@@ -53,6 +53,8 @@
       </Route>
 
       <Route path="shell">
+        <Shell {socket} />
+      </Route>
       <Route>
         <Locate {socket} />
       </Route>
