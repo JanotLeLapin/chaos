@@ -12,6 +12,7 @@ let socket: WebSocket;
 
 // Open WebSocket connection
 export const openConnection = () => {
+  if (socket?.OPEN) return;
   socket = new WebSocket(
     isProduction ? 'wss://chaos-webapp.herokuapp.com' : 'ws://localhost:5000'
   );
