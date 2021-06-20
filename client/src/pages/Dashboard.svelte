@@ -84,4 +84,11 @@
     font-style: italic;
   }
 
+  .widgets {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin: 2rem;
+  }
+
 </style>

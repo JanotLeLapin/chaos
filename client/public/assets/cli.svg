@@ -1,12 +1,12 @@
 <svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="cli">
-<path id="window" d="M0 69H256V209C256 214.523 251.523 219 246 219H10C4.47715 219 0 214.523 0 209V69Z" fill="#515151"/>
-<path id="text" d="M28.4215 103.434L31.8677 97.8462L51.1169 109.76V115.323L31.9415 127.237L28.4215 121.945L44.4215 112.542L28.4215 103.434Z" fill="white"/>
+<path id="window" d="M0 88H256V199C256 210.046 247.046 219 236 219H20C8.95431 219 0 210.046 0 199V88Z" fill="#515151"/>
+<path id="text" d="M37.044 114.9L65.196 132.324V140.46L37.152 157.884L32.004 150.144L55.404 136.392L32.004 123.072L37.044 114.9Z" fill="white"/>
 <g id="title">
-<path id="bar" d="M0 46C0 40.4772 4.47715 36 10 36H246C251.523 36 256 40.4772 256 46V69H0V46Z" fill="#888888"/>
-<circle id="btn_1" cx="18" cy="53" r="11" fill="#5C5C5C"/>
-<circle id="btn_1_2" cx="64" cy="53" r="11" fill="#5C5C5C"/>
-<circle id="btn_1_3" cx="112" cy="53" r="11" fill="#5C5C5C"/>
+<path id="bar" d="M0 56C0 44.9543 8.95431 36 20 36H236C247.046 36 256 44.9543 256 56V88H0V56Z" fill="#888888"/>
+<circle id="btn_1" cx="26.5" cy="61.5" r="14.5" fill="#5C5C5C"/>
+<circle id="btn_1_2" cx="75.5" cy="61.5" r="14.5" fill="#5C5C5C"/>
+<circle id="btn_1_3" cx="124.5" cy="61.5" r="14.5" fill="#5C5C5C"/>
 </g>
 </g>
 </svg>

@@ -7,7 +7,6 @@
   import { openConnection } from './websocket';
 
   openConnection();
-
 </script>
 
 <Router>
@@ -87,5 +86,4 @@
       max-width: none;
     }
   }
-
 </style>

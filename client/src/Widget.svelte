@@ -20,6 +20,8 @@
 
 <style>
   main {
+    display: grid;
+
     background-color: var(--dark-2);
 
     border-radius: 0.5rem;
@@ -29,6 +31,14 @@
     max-width: 240px;
 
     padding: 1rem;
+    margin: 2rem;
+
+    transition: 0.15s ease-in-out;
+  }
+  main:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    transform: translateY(-10px);
   }
 
   .title {
@@ -44,6 +54,8 @@
   }
 
   button {
+    align-self: end;
+
     width: 100%;
   }
 
