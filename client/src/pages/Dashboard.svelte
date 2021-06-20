@@ -6,6 +6,7 @@
   import { secondsToString } from '../util';
   import Widget from '../Widget.svelte';
   import Shell from './widgets/Shell.svelte';
+  import { subscribe } from '../websocket';
   import Locate from './widgets/Locate.svelte';
 
   const params = useParams();
@@ -14,6 +15,10 @@
   let time = 0;
 
   onMount(async () => {
+    subscribe((command) => {
+      if (command.name !== 'targetQuit') return;
+      if (command.data?.id === socket.id) window.location.href = '/targets';
+    });
     try {
       socket = await Api.target($params.id);
       time = Math.round(
