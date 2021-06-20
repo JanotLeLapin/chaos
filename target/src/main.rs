@@ -101,49 +101,47 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         OwnedMessage::Text(string) => {
           let command: Command = serde_json::from_str(&string).expect("Could not parse command.");
 
-          let out: String = (|| -> String {
-            match &*command.name {
-              "cmd" => {
-                let input = match serde_json::to_string(&command.data["input"]) {
-                  Ok(v) => {
-                    let mut chars = v.chars();
-                    chars.next();
-                    chars.next_back();
-                    String::from(chars.as_str())
-                  }
-                  Err(_) => "echo Hello".to_string(),
-                };
-
-                let mut program = "sh";
-                let mut arg0 = "-c";
-
-                if env::consts::OS == "windows" {
-                  program = "cmd";
-                  arg0 = "/C";
+          let out = (|| match &*command.name {
+            "cmd" => {
+              let input = match serde_json::to_string(&command.data["input"]) {
+                Ok(v) => {
+                  let mut chars = v.chars();
+                  chars.next();
+                  chars.next_back();
+                  String::from(chars.as_str())
                 }
+                Err(_) => "echo Hello".to_string(),
+              };
 
-                let mut cmd = std::process::Command::new(program);
-                cmd.arg(arg0);
-                cmd.arg(input);
+              let mut program = "sh";
+              let mut arg0 = "-c";
 
-                let output = match cmd.output() {
-                  Ok(v) => v,
-                  Err(_) => {
-                    return "Error while running command.".to_string();
-                  }
-                };
-                let stdout = String::from_utf8_lossy(&output.stdout).to_string();
-                if stdout == "" {
-                  let stderr = String::from_utf8_lossy(&output.stderr).to_string();
-                  if stderr == "" {
-                    return "No output.".to_string();
-                  }
-                  return stderr;
-                }
-                return stdout;
+              if env::consts::OS == "windows" {
+                program = "cmd";
+                arg0 = "/C";
               }
-              _ => return "Unknown command.".to_string(),
-            };
+
+              let mut cmd = std::process::Command::new(program);
+              cmd.arg(arg0);
+              cmd.arg(input);
+
+              let output = match cmd.output() {
+                Ok(v) => v,
+                Err(_) => {
+                  return "Error while running command.".to_string();
+                }
+              };
+              let stdout = String::from_utf8_lossy(&output.stdout).to_string();
+              if stdout == "" {
+                let stderr = String::from_utf8_lossy(&output.stderr).to_string();
+                if stderr == "" {
+                  return "No output.".to_string();
+                }
+                return stderr;
+              }
+              return stdout;
+            }
+            _ => return "Unknown command.".to_string(),
           })();
 
           let output = json!({
