@@ -9,6 +9,7 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
+    "dev": "nodemon build/main",
     "start": "node build/main",
     "build:main": "tsc -p tsconfig.json",
     "build:client": "yarn --cwd client install && yarn --cwd client build",
