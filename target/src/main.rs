@@ -122,8 +122,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                   arg0 = "/C";
                 }
 
-                println!("{}", input);
-
                 let mut cmd = std::process::Command::new(program);
                 cmd.arg(arg0);
                 cmd.arg(input);
@@ -158,8 +156,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
           });
 
           match tx_1.send(OwnedMessage::Text(output.to_string())) {
-            Ok(_) => println!("Responded to {}", command.name),
             Err(_) => println!("Could not respond to {}", command.name),
+            _ => (),
           }
         }
         // Say what we received
