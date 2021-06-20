@@ -110,7 +110,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     chars.next();
                     chars.next_back();
                     String::from(chars.as_str())
-                  },
+                  }
                   Err(_) => "echo Hello".to_string(),
                 };
 
@@ -134,15 +134,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     return "Error while running command.".to_string();
                   }
                 };
-                let stdout = match String::from_utf8(output.stdout) {
-                  Ok(v) => v,
-                  Err(_) => "Could not parse command.".to_string(),
-                };
+                let stdout = String::from_utf8_lossy(&output.stdout).to_string();
                 if stdout == "" {
-                  let stderr = match String::from_utf8(output.stderr) {
-                    Ok(v) => v,
-                    Err(_) => "Could not parse command.".to_string(),
-                  };
+                  let stderr = String::from_utf8_lossy(&output.stderr).to_string();
                   if stderr == "" {
                     return "No output.".to_string();
                   }
