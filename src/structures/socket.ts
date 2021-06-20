@@ -18,7 +18,6 @@ export class Socket {
     this.socket = socket;
 
     let interval = setInterval(() => {
-      console.log(this.pings);
       if (this.pings >= 2) {
         socket.close();
         clearInterval(interval);

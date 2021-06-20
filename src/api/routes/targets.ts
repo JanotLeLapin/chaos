@@ -46,7 +46,5 @@ router.get('/:id/locate', async (req, res) => {
     return res.status(500).json({ message: 'Could not locate target.' });
   }
 
-  console.log(target);
-
   return res.status(200).json(target.location);
 });
