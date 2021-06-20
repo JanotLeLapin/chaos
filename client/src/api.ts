@@ -21,6 +21,11 @@ export interface Socket {
   up: Date;
 }
 
+export interface Location {
+  latitude: number;
+  longitude: number;
+}
+
 export class Api {
   static targets(): Promise<Socket[]> {
     return new Promise(async (resolve, reject) => {
@@ -41,6 +46,17 @@ export class Api {
           ...data,
           up: new Date(data.up),
         });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static locate(id: string): Promise<Location> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await axios.get(baseUrl + 'targets/' + id + '/locate');
+        resolve(data);
       } catch (err) {
         reject(err);
       }

