@@ -64,10 +64,12 @@ wss.on('connection', (ws) => {
         } catch (err) {
           return;
         }
-        if (data.name !== 'cmd') return;
+        if (!['cmd', 'targetKick'].includes(data.name)) return;
 
         const target = targets.find((t) => t.id === data.to);
         if (!target) return;
+
+        if (data.name === 'targetKick') return target.socket.close();
 
         target.send(data.name, data.data, client.id);
       });

@@ -6,13 +6,22 @@
   import { secondsToString } from '../util';
   import Widget from '../Widget.svelte';
   import Shell from './widgets/Shell.svelte';
-  import { subscribe } from '../websocket';
+  import { sendCommand, subscribe } from '../websocket';
   import Locate from './widgets/Locate.svelte';
 
   const params = useParams();
 
   let socket: Socket;
   let time = 0;
+
+  const disconnect = () => {
+    sendCommand({
+      name: 'targetKick',
+      data: { id: socket.id },
+      from: '-1',
+      to: socket.id,
+    });
+  };
 
   onMount(async () => {
     subscribe((command) => {
@@ -32,7 +41,6 @@
       console.error(err);
     }
   });
-
 </script>
 
 <Router>
@@ -55,12 +63,15 @@
             icon="/assets/marker.svg"
           />
         </div>
+        <div class="buttons">
+          <button on:click={disconnect} class="disconnect">Disconnect</button>
+        </div>
       </Route>
 
       <Route path="shell">
         <Shell {socket} />
       </Route>
-      <Route>
+      <Route path="locate">
         <Locate {socket} />
       </Route>
     {/if}
@@ -90,5 +101,4 @@
 
     margin: 2rem;
   }
-
 </style>
