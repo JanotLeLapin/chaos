@@ -35,7 +35,6 @@
       output += out ? out + '\n' : '';
     });
   });
-
 </script>
 
 <main>
@@ -72,11 +71,11 @@
   textarea {
     resize: none;
 
-    width: calc(100% - 4rem);
+    width: calc(100vw - 4rem);
+    height: calc(90vh - 12rem);
   }
 
   input {
     width: calc(100% - 8rem);
   }
-
 </style>
